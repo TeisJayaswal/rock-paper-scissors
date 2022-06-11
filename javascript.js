@@ -1,37 +1,29 @@
-/* Our playround function is now working properly. Now we need to play the games multiple times as a series of 5 games to see who won the most 
-
-we could approach this by creating two counters, but ultimately, we can simplify and use one. because we know at the end, if the user's number of victories is greater than or equal to 3, then they won. otherwise, they got 2 or less victories which means they lost. So really, we can just keep track of the amount of user wins to figure out who has won the series in the end. */ 
-
-/* we will create a new function called game where we call our previous function playRound to play a 5 round game and keep score */ 
-
-/*function game(playRound(playerSelection, computerSelection)) { */
-
-/* to play 5 times, we will use a for loop that iterates through playRound 5 times */ 
-gameResult = game()
+/* gameResult = game()
 console.log(gameResult)
 // console.log(game()); 
-document.querySelector("#mainText").innerText = gameResult
+document.querySelector("#mainText").innerText = gameResult */ 
 
-function game() {
+
+/* function game() {
     
     userWins = 0;
     computerWins = 0; 
     ties = 0; 
 
-    for(let i = 1; i < 2; i++) {
+    for(let i = 1; i < 5; i++) { */ 
 
         /* the console log statement below checks to see if our for loop is working...it is...in our console log we are seeing Round 1, Round 2, etc. */ 
 
-        console.log("Round " + i);
+        /*console.log("Round " + i);
         /* we create a counter for user wins that starts at zero and we will add one each time the user wins */ 
 
         /* the issue right now is that it is using the same value each time for the statement below. we need to find a way so that the value resets and it runs through the above multiple times. 
         To do this, I think we might have to call each of our functions again i.e. computerPlay, playerPlay and playRound*/ 
 
-        let computerSelection = computerPlay(); 
+      /*   let computerSelection = computerPlay(); 
         console.log(computerSelection); 
 
-        /* now our loop is working for the most part but it's asking us to input 3 times. why is that?*/ 
+       now our loop is working for the most part but it's asking us to input 3 times. why is that?
 
         let playerSelection = playerPlay(); 
         console.log(playerSelection); 
@@ -39,7 +31,7 @@ function game() {
         result = playRound(playerSelection, computerSelection); 
 
         if (result.win === true) {
-            userWins += 1
+            /* userWins += 1
             console.log(`userWins: ${userWins}`) 
         }
         else if (result.win === false) {
@@ -53,9 +45,9 @@ function game() {
 
         console.log(result.message); 
 
-    }
+    } */ 
 
-    console.log(`userWins: ${userWins}`)
+    /* console.log(`userWins: ${userWins}`)
     console.log(`computerWins: ${computerWins}`)
     console.log(`ties: ${ties}`)
 
@@ -67,11 +59,80 @@ function game() {
     }
     else {
         return "You dumb ass piece of shit, you lost the game"
-    }
+
+    } */ 
+
+
+game(); 
+/* first we create a function in which we want to pass in an array */ 
+function game() {
+    let userWins = 0;
+    let computerWins = 0; 
+    let ties = 0; 
+    
+    // let playerSelection = playerPlay();
+
+    const buttons = document.querySelectorAll('button');
+    // we use the .forEach method to iterate through each button
+    buttons.forEach((button) => {
+        // and for each one we add a 'click' listener
+        button.addEventListener('click', () => {
+           
+            const header = document.querySelector('#welcome-game');
+
+            header.textContent = "Let's play!";
+
+            const finalAnnouncement = document.querySelector('#finalAnnouncement');
+            finalAnnouncement.textContent = "";
+
+            let computerSelection = computerPlay();
+            // var input = 
+            // here
+            playerSelection = button.id;
+             
+
+            result = playRound(playerSelection, computerSelection); 
+            
+
+            const messageResult = document.querySelector('#message-result'); 
+
+            messageResult.textContent = `${result.message}`; 
+            messageResult.setAttribute('style', 'color: red; text-align: center')
+
+            if (result.win === true) {
+                userWins += 1 
+            }
+            else if (result.win === false) {
+                computerWins += 1
+            }
+            else {
+                ties += 1 
+            }
+
+            const roundResults = document.querySelector('#roundResults');
+            roundResults.textContent = `User Wins: ${userWins} \n Computer Wins: ${computerWins}` 
+            roundResults.setAttribute('style', 'color: blue; text-align: center'); 
+
+            finalAnnouncement.setAttribute('style', 'color: yellow; text-align: center; font-weight: bold; font-size: 50px');  
+
+            if (userWins === 5) {
+                finalAnnouncement.textContent = "You win the game! Congrats";
+            }
+            else if (computerWins === 5) {
+                finalAnnouncement.textContent = "You lose the game, you dumb turd!"; 
+            }
+
+            if (userWins === 5 || computerWins === 5) {
+                userWins = 0; 
+                computerWins = 0; 
+                ties = 0;  
+            }
+
+        });
+    })
 
 }
 
-/* first we create a function in which we want to pass in an array */ 
 function computerPlay() {  
 
     /* we create an array that has the options that we want to give the computer which are rock, paper and scissors */ 
@@ -94,13 +155,27 @@ function computerPlay() {
 
 function playerPlay() {
     
-    var input = prompt("Type either 'rock', 'paper' or 'scissors'"); 
+    const buttons = document.querySelectorAll('button');
+    // we use the .forEach method to iterate through each button
+    buttons.forEach((button) => {
 
-    /* by converting to lowercase, this will make sure that whatever the user types will not be case sensitive */ 
+    // and for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+      var input = button.id;
+      console.log("In Click Handler")
+      return input; 
+    });
 
-    return input.toLowerCase();  
+    console.log("Returning from Player Play")
 
+    return
+})
 }
+    /* var input = prompt("Type either 'rock', 'paper' or 'scissors'"); 
+
+     by converting to lowercase, this will make sure that whatever the user types will not be case sensitive 
+
+    return input.toLowerCase();  */  
 
 
 /* now I have two variables, I've got computerSelection and playerSelection. I need to create a function that compares the two variables and prints out whether the user wins or loses depending on what they pick. We also need to return something like 'you didn't pick rock, paper, or scissors' if they type something different */ 
@@ -219,4 +294,3 @@ Now we compare iterations of playerSelection and computerSelection to see who ha
         return 'You win! Rock beats scissors' 
     if the computerSelection is 'scissors' and the playerSelection is 'Paper' 
         return 'You lose! Scissors beats paper!' */ 
-
