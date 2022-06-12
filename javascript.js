@@ -83,7 +83,7 @@ function game() {
             header.textContent = "Let's play!";
 
             const finalAnnouncement = document.querySelector('#finalAnnouncement');
-            finalAnnouncement.textContent = ";
+            finalAnnouncement.textContent = "";
 
             let computerSelection = computerPlay();
             // var input = 
